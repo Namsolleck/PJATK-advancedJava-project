@@ -1,0 +1,11 @@
+rootProject.name = 'speedrun-manager'
+include 'speedrun-data'
+include 'speedrun-client'
+include 'speedrun-updater'
+include 'speedrun-web-api'
+include 'speedrun-diagnostics'
+include 'speedrun-data'
+include 'speedrun-client'
+include 'speedrun-updater'
+include 'speedrun-web-api'
+
