@@ -2,8 +2,14 @@ package com.speedrun.data.repositories;
 
 import com.speedrun.data.model.Platform;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 public interface PlatformRepository extends JpaRepository<Platform, Long> {
-    Optional<Platform> findByExternalId(String externalId);
+    java.util.Optional<Platform> findByExternalId(String externalId);
+
+    // Pobiera najpopularniejsze platformy
+    @Query("SELECT p.name as name, COUNT(r) as value FROM Run r JOIN r.platform p GROUP BY p.name ORDER BY value DESC")
+    List<StatProjection> findMostPopularPlatforms(Pageable pageable);
 }

@@ -57,4 +57,18 @@ public class SpeedrunClient {
             return null;
         }
     }
+
+    public String findGameIdByName(String name) {
+        String url = API_URL + "/games?name=" + name;
+        try {
+            GameListResponseDto response = restTemplate.getForObject(url, GameListResponseDto.class);
+            if (response != null && response.getData() != null && !response.getData().isEmpty()) {
+                // Zwracamy ID pierwszego dopasowania
+                return response.getData().get(0).getId();
+            }
+        } catch (Exception e) {
+            log.error("Błąd podczas szukania gry o nazwie {}: {}", name, e.getMessage());
+        }
+        return null;
+    }
 }
