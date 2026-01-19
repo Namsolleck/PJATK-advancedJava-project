@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Speedrun Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-4">
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">🏆 Najpopularniejsze Platformy</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                        th:each="stat : ${topPlatforms}">
+                        <span th:text="${stat.name}">PC</span>
+                        <span class="badge bg-primary rounded-pill" th:text="${stat.value}">14</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">🏃 Najaktywniejsi Gracze</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center"
+                        th:each="stat : ${topUsers}">
+                        <span th:text="${stat.name}">Player1</span>
+                        <span class="badge bg-success rounded-pill" th:text="${stat.value}">10</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm p-3">
+        <form th:action="@{/dashboard/add}" method="post" class="row g-2 align-items-center">
+            <div class="col-auto">
+                <label class="fw-bold">Dodaj grę:</label>
+            </div>
+            <div class="col">
+                <input type="text" name="gameInput" class="form-control" placeholder="Nazwa (np. Minecraft) lub ID" required>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-dark">Importuj</button>
+            </div>
+        </form>
+    </div>
+
+    <h3 class="mb-3">Obserwowane Gry</h3>
+    <table class="table table-hover bg-white shadow-sm rounded">
+        <thead class="table-dark">
+        <tr>
+            <th>Nazwa Gry</th>
+            <th>ID API</th>
+            <th>Akcja</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${games}">
+            <td class="fw-bold" th:text="${game.name}">Undertale</td>
+            <td th:text="${game.externalId}">4d73n317</td>
+            <td>
+                <a th:href="@{'/dashboard/game/' + ${game.id}}" class="btn btn-sm btn-outline-primary">
+                    Szczegóły & Wyniki
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+        <a href="/api/logs" class="text-muted text-decoration-none">Podgląd logów systemowych</a>
+    </div>
+</div>
+</body>
+</html>
